@@ -6,7 +6,6 @@ import org.bliffbot.servermanager.listeners.MenuListener;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.HashMap;
 
 public final class Server_Manager extends JavaPlugin {

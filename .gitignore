@@ -1,3 +1,4 @@
 
 /.idea
 plugin-tools*.jsonc
+/target

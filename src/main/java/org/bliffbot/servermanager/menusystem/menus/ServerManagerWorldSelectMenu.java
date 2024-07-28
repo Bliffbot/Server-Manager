@@ -9,9 +9,7 @@ import org.bukkit.World;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import java.util.ArrayList;
-
 import static org.bukkit.Bukkit.getServer;
 
 public class ServerManagerWorldSelectMenu extends Menu {
