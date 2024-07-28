@@ -1,5 +1,5 @@
 name: Server-Manager
-version: '${project.version}'
+version: '0.0.1'
 main: org.bliffbot.servermanager.Server_Manager
 prefix: Server-Manager
 load: STARTUP
