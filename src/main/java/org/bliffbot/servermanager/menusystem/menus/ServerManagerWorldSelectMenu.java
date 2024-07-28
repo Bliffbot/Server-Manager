@@ -22,7 +22,7 @@ public class ServerManagerWorldSelectMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return "FaafsAdminGUI > Worlds";
+        return "Server-Manager > Worlds";
     }
 
     @Override

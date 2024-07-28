@@ -20,7 +20,7 @@ public class ServerManagerMainMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return "FaafsAdminGUI > Main Menu";
+        return "Server-Manager > Main Menu";
     }
 
     @Override
