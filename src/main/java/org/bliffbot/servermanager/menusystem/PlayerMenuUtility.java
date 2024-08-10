@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 public class PlayerMenuUtility {
 
     private final Player owner;
-    private Player playerToKill;
+    private Player selectedPlayer;
 
     public PlayerMenuUtility(Player p) {
         this.owner = p;
@@ -15,12 +15,12 @@ public class PlayerMenuUtility {
         return owner;
     }
 
-    public Player getPlayerToKill() {
-        return playerToKill;
+    public Player getselectedPlayer() {
+        return selectedPlayer;
     }
 
-    public void setPlayerToKill(Player playerToKill) {
-        this.playerToKill = playerToKill;
+    public void setSelectedPlayer(Player selectedPlayer) {
+        this.selectedPlayer = selectedPlayer;
     }
 
 }

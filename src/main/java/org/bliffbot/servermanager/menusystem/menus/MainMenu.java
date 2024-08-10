@@ -11,15 +11,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
-public class ServerManagerMainMenu extends Menu {
+public class MainMenu extends Menu {
 
-    public ServerManagerMainMenu(PlayerMenuUtility playerMenuUtility) {
+    public MainMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
 
     @Override
     public String getMenuName() {
-        return "Server-Manager > Main Menu";
+        return "SM > Main Menu";
     }
 
     @Override
@@ -35,17 +35,17 @@ public class ServerManagerMainMenu extends Menu {
         if (event.getSlot() == 11) {
 
             PlayerMenuUtility playerMenuUtility = Server_Manager.getPlayerMenuUtility(player);
-            new ServerManagerPlayerSelectMenu(playerMenuUtility).open();
+            new PlayerSelectMenu(playerMenuUtility).open();
 
         } else if (event.getSlot() == 13) {
 
             PlayerMenuUtility playerMenuUtility = Server_Manager.getPlayerMenuUtility(player);
-            new ServerManagerWorldSelectMenu(playerMenuUtility).open();
+            new WorldSelectMenu(playerMenuUtility).open();
 
         } else if (event.getSlot() == 15) {
 
             PlayerMenuUtility playerMenuUtility = Server_Manager.getPlayerMenuUtility(player);
-            new ServerManagerServerSettingsMainMenu(playerMenuUtility).open();
+            new ServerSettingsMainMenu(playerMenuUtility).open();
 
         }
 

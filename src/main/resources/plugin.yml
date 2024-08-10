@@ -7,6 +7,7 @@ authors: [Bliffbot]
 description: A Minecraft Plugin for Spigot server that allows you to manage various things.
 commands:
   server-manager:
+    aliases: sm
     description: Opens the GUI
     usage: /<command>
     permission: server-manager.command.server-manager

@@ -12,15 +12,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import static org.bukkit.Bukkit.getServer;
 
-public class ServerManagerWorldSelectMenu extends Menu {
+public class WorldSelectMenu extends Menu {
 
-    public ServerManagerWorldSelectMenu(PlayerMenuUtility playerMenuUtility) {
+    public WorldSelectMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
 
     @Override
     public String getMenuName() {
-        return "Server-Manager > Worlds";
+        return "SM > Worlds";
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ServerManagerWorldSelectMenu extends Menu {
         }
 
         if (event.getSlot() == getSlots() - 5) {
-            new ServerManagerMainMenu(playerMenuUtility).open();
+            new MainMenu(playerMenuUtility).open();
         }
 
         if (event.getSlot() == getSlots() - 1) {

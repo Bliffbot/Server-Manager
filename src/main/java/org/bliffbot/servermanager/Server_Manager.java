@@ -1,6 +1,6 @@
 package org.bliffbot.servermanager;
 
-import org.bliffbot.servermanager.commands.ServerManagerCommand;
+import org.bliffbot.servermanager.commands.CommandServerManager;
 import org.bliffbot.servermanager.listeners.InventoryDragEventListener;
 import org.bliffbot.servermanager.listeners.MenuListener;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
@@ -19,12 +19,12 @@ public final class Server_Manager extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand("server-manager").setExecutor(new ServerManagerCommand());
+        getCommand("server-manager").setExecutor(new CommandServerManager());
 
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryDragEventListener(), this);
 
-        saveDefaultConfig();
+        this.saveDefaultConfig();
 
         System.out.println("Plugin loaded");
     }
