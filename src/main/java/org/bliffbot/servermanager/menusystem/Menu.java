@@ -1,7 +1,6 @@
 package org.bliffbot.servermanager.menusystem;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -38,26 +37,6 @@ public abstract class Menu implements InventoryHolder {
     @Override
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public void insertBar(boolean backButton) {
-        if (page > 0) {
-            inventory.setItem(getSlots() - 9, makeItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
-        }
-
-        if (backButton) {
-            inventory.setItem(getSlots() - 5, makeItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
-        }
-
-        if (page < pageMax) {
-            inventory.setItem(getSlots() - 1, makeItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
-        }
-
-        for (int i = getSlots() - 9; i < getSlots(); i++) {
-            if (inventory.getItem(i) == null) {
-                inventory.setItem(i, FILLER_GLASS);
-            }
-        }
     }
 
     public void setFillerGlass(){

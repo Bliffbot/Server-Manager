@@ -4,15 +4,11 @@ import org.bliffbot.servermanager.Server_Manager;
 import org.bliffbot.servermanager.menusystem.Menu;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.ArrayList;
 
 public class PlayerMenu extends Menu {
 
@@ -40,7 +36,7 @@ public class PlayerMenu extends Menu {
             new PlayerMenu(playerMenuUtility).open();
         }
 
-        if (event.getSlot() == getSlots() - 5) {
+        if (event.getSlot() == getSlots() - 8) {
             new PlayerSelectMenu(playerMenuUtility).open();
         }
 
@@ -49,10 +45,6 @@ public class PlayerMenu extends Menu {
     @Override
     public void setMenuItems() {
 
-        page = 0;
-        pageMax = 0;
-        insertBar(true);
-
         ItemStack placeholderItem = new ItemStack(Material.PAPER, 1);
         ItemMeta placeholderMeta = placeholderItem.getItemMeta();
 
@@ -60,6 +52,22 @@ public class PlayerMenu extends Menu {
 
         placeholderItem.setItemMeta(placeholderMeta);
         inventory.addItem(placeholderItem);
+
+        if (page > 0) {
+            inventory.setItem(getSlots() - 9, makeItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+        }
+
+        inventory.setItem(getSlots() - 8, makeItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+
+        if (page < pageMax) {
+            inventory.setItem(getSlots() - 1, makeItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+        }
+
+        for (int i = getSlots() - 9; i < getSlots(); i++) {
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, FILLER_GLASS);
+            }
+        }
 
         setFillerGlass();
 

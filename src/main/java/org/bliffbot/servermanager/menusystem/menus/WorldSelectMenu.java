@@ -31,16 +31,16 @@ public class WorldSelectMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
 
-        if (event.getSlot() == getSlots() - 9) {
+        if (event.getSlot() == getSlots() - 9 && page > 0) {
             page = page - 1;
             super.open();
         }
 
-        if (event.getSlot() == getSlots() - 5) {
+        if (event.getSlot() == getSlots() - 8) {
             new MainMenu(playerMenuUtility).open();
         }
 
-        if (event.getSlot() == getSlots() - 1) {
+        if (event.getSlot() == getSlots() - 1 && pageMax > page) {
             page = page + 1;
             super.open();
         }
@@ -52,7 +52,6 @@ public class WorldSelectMenu extends Menu {
 
         ArrayList<World> worlds = new ArrayList<>(getServer().getWorlds());
         pageMax = (int) Math.ceil(worlds.size() / (double) maxItemsPerPage) - 1;
-        insertBar(true);
 
         if (!worlds.isEmpty()) {
             for (int slot = 0; slot < maxItemsPerPage; slot++) {
@@ -82,6 +81,22 @@ public class WorldSelectMenu extends Menu {
                     inventory.addItem(worldItem);
 
                 }
+            }
+        }
+
+        if (page > 0) {
+            inventory.setItem(getSlots() - 9, makeItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+        }
+
+        inventory.setItem(getSlots() - 8, makeItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+
+        if (page < pageMax) {
+            inventory.setItem(getSlots() - 1, makeItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+        }
+
+        for (int i = getSlots() - 9; i < getSlots(); i++) {
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, FILLER_GLASS);
             }
         }
 

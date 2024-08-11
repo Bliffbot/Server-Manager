@@ -57,7 +57,13 @@ public class PlayerSelectMenu extends Menu {
             } else if (!Bukkit.getPlayer(skullMeta.getOwner()).isOnline()) {
                 if (skullMeta.getLore().get(0).equals(ChatColor.RED + "This player could not be found and can therefore not be modified!")) return;
                 ItemStack offlinePlayerItem = inventory.getItem(event.getSlot());
-                skullMeta.getLore().add(0, ChatColor.RED + "This player could not be found and can therefore not be modified!");
+
+                ArrayList<String> offlinePlayerLore = new ArrayList<>();
+                offlinePlayerLore.add(ChatColor.RED + "This player could not be found and can therefore not be modified!");
+                offlinePlayerLore.add("");
+                offlinePlayerLore.addAll(skullMeta.getLore());
+                skullMeta.setLore(offlinePlayerLore);
+
                 offlinePlayerItem.setItemMeta(skullMeta);
                 inventory.setItem(event.getSlot(), offlinePlayerItem);
 
@@ -67,16 +73,16 @@ public class PlayerSelectMenu extends Menu {
             }
         }
 
-        if (event.getSlot() == getSlots() - 9) {
+        if (event.getSlot() == getSlots() - 9 && page > 0) {
             page = page - 1;
             super.open();
         }
 
-        if (event.getSlot() == getSlots() - 5) {
+        if (event.getSlot() == getSlots() - 8) {
             new MainMenu(playerMenuUtility).open();
         }
 
-        if (event.getSlot() == getSlots() - 1) {
+        if (event.getSlot() == getSlots() - 1 && pageMax > page) {
             page = page + 1;
             super.open();
         }
@@ -88,7 +94,6 @@ public class PlayerSelectMenu extends Menu {
 
         ArrayList<Player> players = new ArrayList<>(getServer().getOnlinePlayers());
         pageMax = (int) Math.ceil(players.size() / (double) maxItemsPerPage) - 1;
-        insertBar(true);
 
         if (!players.isEmpty()) {
             for (int slot = 0; slot < maxItemsPerPage; slot++) {
@@ -156,5 +161,22 @@ public class PlayerSelectMenu extends Menu {
                 inventory.addItem(playerItem);
             }
         }
+
+        if (page > 0) {
+            inventory.setItem(getSlots() - 9, makeItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+        }
+
+        inventory.setItem(getSlots() - 8, makeItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+
+        if (page < pageMax) {
+            inventory.setItem(getSlots() - 1, makeItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+        }
+
+        for (int i = getSlots() - 9; i < getSlots(); i++) {
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, FILLER_GLASS);
+            }
+        }
+
     }
 }
