@@ -63,9 +63,7 @@ public class WorldSelectMenu extends Menu {
 
                     ItemStack worldItem = new ItemStack(Material.EMPTY_MAP, 1);
                     ItemMeta worldMeta = worldItem.getItemMeta();
-
                     worldMeta.setDisplayName(ChatColor.YELLOW + worlds.get(index).getName());
-
                     ArrayList<String> worldLore = new ArrayList<>();
                     worldLore.add(ChatColor.GRAY + "UID: " + ChatColor.DARK_GRAY + worlds.get(index).getUID().toString());
                     worldLore.add(ChatColor.GRAY + "Seed: " + ChatColor.DARK_GRAY + worlds.get(index).getSeed());
@@ -76,7 +74,6 @@ public class WorldSelectMenu extends Menu {
                     worldLore.add(ChatColor.GRAY + "Time (passed): " + ChatColor.DARK_GRAY + worlds.get(index).getFullTime());
                     worldLore.add(ChatColor.GRAY + "Spawn Location:" + ChatColor.DARK_GRAY + " [X] " + spawn.getX() + " [Y] " + spawn.getY() + " [Z] " + spawn.getZ());
                     worldMeta.setLore(worldLore);
-
                     worldItem.setItemMeta(worldMeta);
                     inventory.addItem(worldItem);
 

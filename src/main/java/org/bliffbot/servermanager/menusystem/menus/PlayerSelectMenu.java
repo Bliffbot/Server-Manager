@@ -82,6 +82,10 @@ public class PlayerSelectMenu extends Menu {
             new MainMenu(playerMenuUtility).open();
         }
 
+        if (event.getSlot() == getSlots() - 7) {
+            new PlayerSelectFilterMenu(playerMenuUtility).open();
+        }
+
         if (event.getSlot() == getSlots() - 1 && pageMax > page) {
             page = page + 1;
             super.open();
