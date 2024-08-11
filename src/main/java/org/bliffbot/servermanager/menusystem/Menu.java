@@ -7,13 +7,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import java.util.Arrays;
 
 public abstract class Menu implements InventoryHolder {
 
     protected PlayerMenuUtility playerMenuUtility;
     protected Inventory inventory;
-    protected ItemStack FILLER_GLASS = makeItem(Material.STAINED_GLASS_PANE, " ");
     protected int page = 0;
     protected int pageMax = 0;
     protected int index = 0;
@@ -39,23 +37,28 @@ public abstract class Menu implements InventoryHolder {
         return inventory;
     }
 
-    public void setFillerGlass(){
+    public void setFillerGlass() {
         for (int i = 0; i < getSlots(); i++) {
             if (inventory.getItem(i) == null){
-                inventory.setItem(i, FILLER_GLASS);
+                inventory.setItem(i, getFillerGlass());
             }
         }
     }
 
-    public ItemStack makeItem(Material material, String displayName, String... lore) {
-
-        ItemStack item = new ItemStack(material, 1, (short) 7);
+    public ItemStack getFillerGlass() {
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(displayName);
-        itemMeta.setLore(Arrays.asList(lore));
+        itemMeta.setDisplayName("");
         item.setItemMeta(itemMeta);
-
         return item;
+    }
+
+    public ItemStack getBasicItem(Material material, String displayName) {
+        ItemStack itemStack = new ItemStack(material, 1);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(displayName);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
     }
 
 }

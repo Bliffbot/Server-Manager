@@ -163,18 +163,19 @@ public class PlayerSelectMenu extends Menu {
         }
 
         if (page > 0) {
-            inventory.setItem(getSlots() - 9, makeItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+            inventory.setItem(getSlots() - 9, getBasicItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
         }
 
-        inventory.setItem(getSlots() - 8, makeItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+        inventory.setItem(getSlots() - 8, getBasicItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+        inventory.setItem(getSlots() - 7, getBasicItem(Material.HOPPER, ChatColor.GRAY + "Filters"));
 
         if (page < pageMax) {
-            inventory.setItem(getSlots() - 1, makeItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+            inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
         }
 
         for (int i = getSlots() - 9; i < getSlots(); i++) {
             if (inventory.getItem(i) == null) {
-                inventory.setItem(i, FILLER_GLASS);
+                inventory.setItem(i, getFillerGlass());
             }
         }
 
