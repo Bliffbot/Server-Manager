@@ -58,7 +58,7 @@ public class MainMenu extends Menu {
         ItemMeta playerMeta = playerItem.getItemMeta();
         playerMeta.setDisplayName(ChatColor.BLUE + "Players");
         ArrayList<String> playerLore = new ArrayList<>();
-        playerLore.add(ChatColor.GRAY + "Select a player to do something to them");
+        playerLore.add(ChatColor.GRAY + "Select a player to change their properties");
         playerMeta.setLore(playerLore);
         playerItem.setItemMeta(playerMeta);
         inventory.setItem(11, playerItem);

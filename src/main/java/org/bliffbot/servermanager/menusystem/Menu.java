@@ -48,7 +48,7 @@ public abstract class Menu implements InventoryHolder {
     public ItemStack getFillerGlass() {
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName("");
+        itemMeta.setDisplayName(" ");
         item.setItemMeta(itemMeta);
         return item;
     }

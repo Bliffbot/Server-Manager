@@ -35,13 +35,13 @@ public class ServerSettingsMainMenu extends Menu {
     public void setMenuItems() {
 
         if (page > 0) {
-            inventory.setItem(getSlots() - 9, getBasicItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+            inventory.setItem(getSlots() - 9, getBasicItem(Material.ARROW, ChatColor.WHITE + "Last Page"));
         }
 
-        inventory.setItem(getSlots() - 8, getBasicItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
+        inventory.setItem(getSlots() - 8, getBasicItem(Material.SPECTRAL_ARROW, ChatColor.WHITE + "Go Back"));
 
         if (page < pageMax) {
-            inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+            inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.WHITE + "Next Page"));
         }
 
         for (int i = getSlots() - 9; i < getSlots(); i++) {

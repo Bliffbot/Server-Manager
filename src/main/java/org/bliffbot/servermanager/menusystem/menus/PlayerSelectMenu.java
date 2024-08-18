@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import static org.bukkit.Bukkit.getServer;
@@ -120,7 +121,7 @@ public class PlayerSelectMenu extends Menu {
                 playerLore.add(ChatColor.GRAY + "Saturation: " + ChatColor.DARK_GRAY + players.get(index).getSaturation());
                 playerLore.add(ChatColor.GRAY + "Remaining Air: " + ChatColor.DARK_GRAY + players.get(index).getRemainingAir());
                 playerLore.add(ChatColor.GRAY + "Exp (Total Exp / Level): " + ChatColor.DARK_GRAY + players.get(index).getTotalExperience() + " / " + players.get(index).getLevel());
-                playerLore.add(ChatColor.GRAY + "Location: " + ChatColor.DARK_GRAY + String.format("[X] %.3f", location.getX()) + String.format(" [Y] %.3f", +location.getY()) + String.format(" [Z] %.3f", location.getZ()));
+                playerLore.add(ChatColor.GRAY + "Location: " + ChatColor.DARK_GRAY + String.format("[X] %.3f", location.getX()) + String.format(" [Y] %.3f", location.getY()) + String.format(" [Z] %.3f", location.getZ()));
                 playerLore.add(ChatColor.GRAY + "World: " + ChatColor.DARK_GRAY + players.get(index).getWorld().getName());
                 playerLore.add("");
                 playerLore.add(ChatColor.GRAY + "UUID: " + ChatColor.DARK_GRAY + players.get(index).getUniqueId().toString());
@@ -167,14 +168,31 @@ public class PlayerSelectMenu extends Menu {
         }
 
         if (page > 0) {
-            inventory.setItem(getSlots() - 9, getBasicItem(Material.ARROW, ChatColor.GRAY + "Last Page"));
+            inventory.setItem(getSlots() - 9, getBasicItem(Material.ARROW, ChatColor.WHITE + "Last Page"));
         }
 
-        inventory.setItem(getSlots() - 8, getBasicItem(Material.SPECTRAL_ARROW, ChatColor.GRAY + "Go Back"));
-        inventory.setItem(getSlots() - 7, getBasicItem(Material.HOPPER, ChatColor.GRAY + "Filters"));
+        inventory.setItem(getSlots() - 8, getBasicItem(Material.SPECTRAL_ARROW, ChatColor.WHITE + "Go Back"));
+
+        ItemStack filterItem = new ItemStack(Material.HOPPER, 1);
+        ItemMeta filterMeta = filterItem.getItemMeta();
+        filterMeta.setDisplayName(ChatColor.WHITE + "Filter");
+        ArrayList<String> filterLore = new ArrayList<>();
+        filterLore.add(ChatColor.GRAY + "Filter the list by the properties of the players");
+        filterMeta.setLore(filterLore);
+        filterItem.setItemMeta(filterMeta);
+        inventory.setItem(getSlots() - 7, filterItem);
+
+        ItemStack infoItem = new ItemStack(Material.PAPER, 1);
+        ItemMeta infoMeta = infoItem.getItemMeta();
+        infoMeta.setDisplayName(ChatColor.WHITE + "Info");
+        ArrayList<String> infoLore = new ArrayList<>();
+        infoLore.add(ChatColor.GRAY + "Change which properties you would like to see");
+        infoMeta.setLore(infoLore);
+        infoItem.setItemMeta(infoMeta);
+        inventory.setItem(getSlots() - 6, infoItem);
 
         if (page < pageMax) {
-            inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.GRAY + "Next Page"));
+            inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.WHITE + "Next Page"));
         }
 
         for (int i = getSlots() - 9; i < getSlots(); i++) {
