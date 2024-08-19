@@ -10,6 +10,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+
 public class PlayerMenu extends Menu {
 
     public PlayerMenu(PlayerMenuUtility playerMenuUtility) {
@@ -49,6 +51,11 @@ public class PlayerMenu extends Menu {
         ItemMeta placeholderMeta = placeholderItem.getItemMeta();
 
         placeholderMeta.setDisplayName("Hi " + playerMenuUtility.getOwner().getDisplayName());
+
+        ArrayList<String> placeholderLore = new ArrayList<>();
+        placeholderLore.add(playerMenuUtility.getSelectedPlayerTest().getDisplayName());
+        placeholderLore.add(playerMenuUtility.getSelectedPlayerTest().getUniqueId().toString());
+        placeholderMeta.setLore(placeholderLore);
 
         placeholderItem.setItemMeta(placeholderMeta);
         inventory.addItem(placeholderItem);

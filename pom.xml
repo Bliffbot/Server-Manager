@@ -10,9 +10,9 @@
   <packaging>jar</packaging>
 
   <name>Server-Manager</name>
+  <description>A Minecraft Plugin for Spigot server that allows you to manage various things.</description>
 
-    <description>A Minecraft Plugin for Spigot server that allows you to manage various things.</description>
-    <properties>
+  <properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -64,8 +64,8 @@
   <dependencies>
       <dependency>
           <groupId>org.spigotmc</groupId>
-          <artifactId>spigot-api</artifactId>
-          <version>1.12-R0.1-SNAPSHOT</version>
+          <artifactId>spigot</artifactId>
+          <version>1.12.2-R0.1-SNAPSHOT</version>
           <scope>provided</scope>
       </dependency>
   </dependencies>

@@ -1,5 +1,7 @@
 package org.bliffbot.servermanager.menusystem.menus;
 
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagList;
 import org.bliffbot.servermanager.Server_Manager;
 import org.bliffbot.servermanager.menusystem.Menu;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
@@ -7,12 +9,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
+import java.util.UUID;
+
 import static org.bukkit.Bukkit.getServer;
 
 public class PlayerSelectMenu extends Menu {
@@ -70,6 +77,14 @@ public class PlayerSelectMenu extends Menu {
 
             } else {
                 playerMenuUtility.setSelectedPlayer(Bukkit.getPlayer(skullMeta.getOwner()));
+
+                ItemStack slotItem = inventory.getItem(event.getSlot());
+
+                net.minecraft.server.v1_12_R1.ItemStack slotNMSStack = CraftItemStack.asNMSCopy(slotItem);
+                NBTTagCompound playerCompound = (slotNMSStack.hasTag()) ? slotNMSStack.getTag() : new NBTTagCompound();
+                String uuid = playerCompound.getCompound("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu").getString("uuid");
+                playerMenuUtility.setSelectedPlayerTest(Bukkit.getPlayer(UUID.fromString(uuid)));
+
                 new PlayerMenu(playerMenuUtility).open();
             }
         }
@@ -163,7 +178,17 @@ public class PlayerSelectMenu extends Menu {
                 playerMeta.setLore(playerLore);
 
                 playerItem.setItemMeta(playerMeta);
-                inventory.addItem(playerItem);
+
+                net.minecraft.server.v1_12_R1.ItemStack playerNMSStack = CraftItemStack.asNMSCopy(playerItem);
+                NBTTagCompound playerCompound = (playerNMSStack.hasTag()) ? playerNMSStack.getTag() : new NBTTagCompound();
+                NBTTagCompound playerCustomTag = new NBTTagCompound();
+                playerCustomTag.setString("uuid", players.get(index).getUniqueId().toString());
+                playerCompound.set("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu", playerCustomTag);
+                playerNMSStack.setTag(playerCompound);
+                ItemStack playerItemModified = CraftItemStack.asBukkitCopy(playerNMSStack);
+
+
+                inventory.addItem(playerItemModified);
             }
         }
 
