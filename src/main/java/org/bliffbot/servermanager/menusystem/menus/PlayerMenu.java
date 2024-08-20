@@ -20,7 +20,7 @@ public class PlayerMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return "SM > " + playerMenuUtility.getselectedPlayer().getDisplayName();
+        return "SM > " + playerMenuUtility.getSelectedPlayer().getDisplayName();
     }
 
     @Override
@@ -53,8 +53,8 @@ public class PlayerMenu extends Menu {
         placeholderMeta.setDisplayName("Hi " + playerMenuUtility.getOwner().getDisplayName());
 
         ArrayList<String> placeholderLore = new ArrayList<>();
-        placeholderLore.add(playerMenuUtility.getSelectedPlayerTest().getDisplayName());
-        placeholderLore.add(playerMenuUtility.getSelectedPlayerTest().getUniqueId().toString());
+        placeholderLore.add(playerMenuUtility.getSelectedPlayer().getDisplayName());
+        placeholderLore.add(playerMenuUtility.getSelectedPlayer().getUniqueId().toString());
         placeholderMeta.setLore(placeholderLore);
 
         placeholderItem.setItemMeta(placeholderMeta);

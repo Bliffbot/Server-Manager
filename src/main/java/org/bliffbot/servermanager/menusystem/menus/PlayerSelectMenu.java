@@ -1,7 +1,6 @@
 package org.bliffbot.servermanager.menusystem.menus;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import net.minecraft.server.v1_12_R1.NBTTagList;
 import org.bliffbot.servermanager.Server_Manager;
 import org.bliffbot.servermanager.menusystem.Menu;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
@@ -10,13 +9,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -42,13 +40,32 @@ public class PlayerSelectMenu extends Menu {
     public void handleMenu(InventoryClickEvent event) {
 
         Player player = (Player) event.getWhoClicked();
+        UUID uuid;
 
         if (event.getSlot() < getSlots() - 9 && inventory.getItem(event.getSlot()) != null) {
 
             PlayerMenuUtility playerMenuUtility = Server_Manager.getPlayerMenuUtility(player);
             SkullMeta skullMeta = (SkullMeta) inventory.getItem(event.getSlot()).getItemMeta();
 
-            if (Bukkit.getPlayer(skullMeta.getOwner()) == null) {
+            net.minecraft.server.v1_12_R1.ItemStack clickedNMSStack = CraftItemStack.asNMSCopy(inventory.getItem(event.getSlot()));
+
+            if (clickedNMSStack.hasTag()) {
+                uuid = UUID.fromString(clickedNMSStack.getTag().getCompound("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu").getString("uuid"));
+
+            } else {
+                ItemStack offlinePlayerItem = inventory.getItem(event.getSlot());
+                ArrayList<String> offlinePlayerLore = new ArrayList<>();
+                offlinePlayerLore.add(ChatColor.RED + "An unexpected error occurred while getting the UUID of this player! Try again in a moment or reopen this menu.");
+                offlinePlayerLore.add("");
+                offlinePlayerLore.addAll(skullMeta.getLore());
+                skullMeta.setLore(offlinePlayerLore);
+
+                offlinePlayerItem.setItemMeta(skullMeta);
+                inventory.setItem(event.getSlot(), offlinePlayerItem);
+                return;
+            }
+
+            if (Bukkit.getPlayer(uuid) == null) {
 
                 if (skullMeta.getLore().get(0).equals(ChatColor.RED + "This player could not be found and can therefore not be modified!")) return;
                 ItemStack offlinePlayerItem = inventory.getItem(event.getSlot());
@@ -62,7 +79,7 @@ public class PlayerSelectMenu extends Menu {
                 offlinePlayerItem.setItemMeta(skullMeta);
                 inventory.setItem(event.getSlot(), offlinePlayerItem);
 
-            } else if (!Bukkit.getPlayer(skullMeta.getOwner()).isOnline()) {
+            } else if (!Bukkit.getPlayer(uuid).isOnline()) {
                 if (skullMeta.getLore().get(0).equals(ChatColor.RED + "This player could not be found and can therefore not be modified!")) return;
                 ItemStack offlinePlayerItem = inventory.getItem(event.getSlot());
 
@@ -76,15 +93,7 @@ public class PlayerSelectMenu extends Menu {
                 inventory.setItem(event.getSlot(), offlinePlayerItem);
 
             } else {
-                playerMenuUtility.setSelectedPlayer(Bukkit.getPlayer(skullMeta.getOwner()));
-
-                ItemStack slotItem = inventory.getItem(event.getSlot());
-
-                net.minecraft.server.v1_12_R1.ItemStack slotNMSStack = CraftItemStack.asNMSCopy(slotItem);
-                NBTTagCompound playerCompound = (slotNMSStack.hasTag()) ? slotNMSStack.getTag() : new NBTTagCompound();
-                String uuid = playerCompound.getCompound("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu").getString("uuid");
-                playerMenuUtility.setSelectedPlayerTest(Bukkit.getPlayer(UUID.fromString(uuid)));
-
+                playerMenuUtility.setSelectedPlayer(Bukkit.getPlayer(uuid));
                 new PlayerMenu(playerMenuUtility).open();
             }
         }
@@ -124,7 +133,7 @@ public class PlayerSelectMenu extends Menu {
                 ItemStack playerItem = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta playerMeta = (SkullMeta) playerItem.getItemMeta();
 
-                playerMeta.setOwner(players.get(index).getDisplayName());
+                playerMeta.setOwningPlayer(players.get(index));
                 playerMeta.setDisplayName(ChatColor.YELLOW + players.get(index).getDisplayName());
                 Location location = players.get(index).getLocation();
 

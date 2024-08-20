@@ -29,8 +29,8 @@ public final class Server_Manager extends JavaPlugin {
         System.out.println("Plugin loaded");
     }
 
-    @Override    public void onDisable() {
-    }
+    @Override
+    public void onDisable() {}
 
     public static PlayerMenuUtility getPlayerMenuUtility(Player player) {
         PlayerMenuUtility playerMenuUtility;

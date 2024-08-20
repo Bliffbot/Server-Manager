@@ -6,7 +6,6 @@ public class PlayerMenuUtility {
 
     private final Player owner;
     private Player selectedPlayer;
-    private Player selectedPlayerTest;
 
     public PlayerMenuUtility(Player p) {
         this.owner = p;
@@ -16,19 +15,11 @@ public class PlayerMenuUtility {
         return owner;
     }
 
-    public Player getselectedPlayer() {
+    public Player getSelectedPlayer() {
         return selectedPlayer;
     }
 
     public void setSelectedPlayer(Player selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
-    }
-
-    public Player getSelectedPlayerTest() {
-        return selectedPlayerTest;
-    }
-
-    public void setSelectedPlayerTest(Player selectedPlayerTest) {
-        this.selectedPlayerTest = selectedPlayerTest;
     }
 }
