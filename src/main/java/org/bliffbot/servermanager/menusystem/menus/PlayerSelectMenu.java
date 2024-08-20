@@ -1,6 +1,6 @@
 package org.bliffbot.servermanager.menusystem.menus;
 
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.*;
 import org.bliffbot.servermanager.Server_Manager;
 import org.bliffbot.servermanager.menusystem.Menu;
 import org.bliffbot.servermanager.menusystem.PlayerMenuUtility;
@@ -111,6 +111,11 @@ public class PlayerSelectMenu extends Menu {
             new PlayerSelectFilterMenu(playerMenuUtility).open();
         }
 
+        if (event.getSlot() == getSlots() - 4) {
+            playerMenuUtility.setPlayerSelectShowSelfFirst(!playerMenuUtility.getPlayerSelectShowSelfFirst());
+            super.open();
+        }
+
         if (event.getSlot() == getSlots() - 1 && pageMax > page) {
             page = page + 1;
             super.open();
@@ -122,6 +127,12 @@ public class PlayerSelectMenu extends Menu {
     public void setMenuItems() {
 
         ArrayList<Player> players = new ArrayList<>(getServer().getOnlinePlayers());
+
+        if (playerMenuUtility.getPlayerSelectShowSelfFirst() && players.contains(playerMenuUtility.getOwner())) {
+            players.remove(playerMenuUtility.getOwner());
+            players.add(0, playerMenuUtility.getOwner());
+        }
+
         pageMax = (int) Math.ceil(players.size() / (double) maxItemsPerPage) - 1;
 
         if (!players.isEmpty()) {
@@ -188,16 +199,16 @@ public class PlayerSelectMenu extends Menu {
 
                 playerItem.setItemMeta(playerMeta);
 
-                net.minecraft.server.v1_12_R1.ItemStack playerNMSStack = CraftItemStack.asNMSCopy(playerItem);
-                NBTTagCompound playerCompound = (playerNMSStack.hasTag()) ? playerNMSStack.getTag() : new NBTTagCompound();
-                NBTTagCompound playerCustomTag = new NBTTagCompound();
-                playerCustomTag.setString("uuid", players.get(index).getUniqueId().toString());
-                playerCompound.set("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu", playerCustomTag);
-                playerNMSStack.setTag(playerCompound);
-                ItemStack playerItemModified = CraftItemStack.asBukkitCopy(playerNMSStack);
-
+                net.minecraft.server.v1_12_R1.ItemStack playerItemNMSStack = CraftItemStack.asNMSCopy(playerItem);
+                NBTTagCompound playerItemCompound = (playerItemNMSStack.hasTag()) ? playerItemNMSStack.getTag() : new NBTTagCompound();
+                NBTTagCompound playerItemCustomTag = new NBTTagCompound();
+                playerItemCustomTag.setString("uuid", players.get(index).getUniqueId().toString());
+                playerItemCompound.set("org.bliffbot.servermanager.menusystem.menus.PlayerSelectMenu", playerItemCustomTag);
+                playerItemNMSStack.setTag(playerItemCompound);
+                ItemStack playerItemModified = CraftItemStack.asBukkitCopy(playerItemNMSStack);
 
                 inventory.addItem(playerItemModified);
+
             }
         }
 
@@ -225,6 +236,31 @@ public class PlayerSelectMenu extends Menu {
         infoItem.setItemMeta(infoMeta);
         inventory.setItem(getSlots() - 6, infoItem);
 
+        ItemStack sortItem = new ItemStack(Material.PAPER, 1);
+        ItemMeta sortMeta = sortItem.getItemMeta();
+        sortMeta.setDisplayName(ChatColor.WHITE + "Sorting");
+        ArrayList<String> sortLore = new ArrayList<>();
+        sortLore.add(ChatColor.GRAY + "Set the property by which you would like to sort the players");
+        sortMeta.setLore(sortLore);
+        sortItem.setItemMeta(sortMeta);
+        inventory.setItem(getSlots() - 5, sortItem);
+
+        ItemStack selfItem = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta selfMeta = (SkullMeta) selfItem.getItemMeta();
+        selfMeta.setOwningPlayer(playerMenuUtility.getOwner());
+        selfMeta.setDisplayName(ChatColor.WHITE + "Show " + playerMenuUtility.getOwner().getDisplayName() + " first");
+        ArrayList<String> selfLore = new ArrayList<>();
+        if (playerMenuUtility.getPlayerSelectShowSelfFirst()) {
+            selfLore.add(ChatColor.BLUE + "> Yes");
+            selfLore.add(ChatColor.GRAY + "  No");
+        } else {
+            selfLore.add(ChatColor.GRAY + "  Yes");
+            selfLore.add(ChatColor.BLUE + "> No");
+        }
+        selfMeta.setLore(selfLore);
+        selfItem.setItemMeta(selfMeta);
+        inventory.setItem(getSlots() - 4, selfItem);
+
         if (page < pageMax) {
             inventory.setItem(getSlots() - 1, getBasicItem(Material.ARROW, ChatColor.WHITE + "Next Page"));
         }
@@ -234,6 +270,5 @@ public class PlayerSelectMenu extends Menu {
                 inventory.setItem(i, getFillerGlass());
             }
         }
-
     }
 }

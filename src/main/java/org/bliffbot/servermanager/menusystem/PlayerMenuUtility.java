@@ -6,6 +6,7 @@ public class PlayerMenuUtility {
 
     private final Player owner;
     private Player selectedPlayer;
+    private Boolean playerSelectShowSelfFirst = true;
 
     public PlayerMenuUtility(Player p) {
         this.owner = p;
@@ -21,5 +22,13 @@ public class PlayerMenuUtility {
 
     public void setSelectedPlayer(Player selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
+    }
+
+    public Boolean getPlayerSelectShowSelfFirst() {
+        return playerSelectShowSelfFirst;
+    }
+
+    public void setPlayerSelectShowSelfFirst(Boolean playerSelectShowSelfFirst) {
+        this.playerSelectShowSelfFirst = playerSelectShowSelfFirst;
     }
 }

@@ -15,7 +15,6 @@ A Minecraft plugin for Spigot servers that allows you to manage various things.
   - info with property list
     - sub-properties (e.g. location x / y / z)
     - sorting with spot numbers
-  - player list self first if filter ok
 - world List
   - filter with property list
     - name lists
@@ -25,7 +24,7 @@ A Minecraft plugin for Spigot servers that allows you to manage various things.
   - info with property list
     - sub-properties (e.g. location x / y / z)
     - sorting with spot numbers
-  - world list self first if filter ok
+  - world list players current world first if filter ok
 - user permissions
 - plugin permissions
 
